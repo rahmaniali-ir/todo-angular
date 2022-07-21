@@ -1,0 +1,5 @@
+<todo-item
+  *ngFor="let todo of todos; trackBy: trackById"
+  [todo]="todo"
+  (click)="todoClicked(todo)"
+></todo-item>
