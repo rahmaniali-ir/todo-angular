@@ -11,6 +11,7 @@ import { Todo, TodoStatus } from 'src/app/types/todo';
 export class TodoListPageComponent implements OnInit {
   title = '';
   body = '';
+  searchKey = '';
   actions: Action[] = [
     {
       name: 'delete',
@@ -26,6 +27,13 @@ export class TodoListPageComponent implements OnInit {
 
   get todos() {
     return this.todoService.todos;
+  }
+
+  get filteredTodos() {
+    const searchKey = this.searchKey.trim().toLowerCase();
+    return this.todos.filter((todo) =>
+      todo.title.toLowerCase().includes(searchKey)
+    );
   }
 
   addTodo() {

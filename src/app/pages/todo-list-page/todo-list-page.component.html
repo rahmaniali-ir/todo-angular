@@ -1,5 +1,9 @@
+<header>
+  <input [(ngModel)]="searchKey" type="text" />
+</header>
+
 <todo-list
-  [todos]="todos"
+  [todos]="filteredTodos"
   [actions]="actions"
   (onAction)="onListAction($event)"
 ></todo-list>
