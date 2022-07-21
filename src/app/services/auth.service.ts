@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import { Router } from '@angular/router';
 import { BehaviorSubject } from 'rxjs';
 import { AuthResponse } from '../types/auth';
 import { User } from '../types/user';
@@ -12,7 +13,7 @@ export class AuthService {
 
   private _token = '';
 
-  constructor(private apiService: ApiService) {
+  constructor(private apiService: ApiService, private router: Router) {
     this.loadCredentialsFromLocalhost();
   }
 
@@ -61,5 +62,17 @@ export class AuthService {
       .subscribe((auth) => {
         console.log(auth);
       });
+  }
+
+  signOut() {
+    this.apiService.delete<boolean>('sign-out').subscribe((res) => {
+      if (res.body) {
+        localStorage.clear();
+        this.user$.next(null);
+        this._token = '';
+
+        this.router.navigate(['/sign-in']);
+      }
+    });
   }
 }
