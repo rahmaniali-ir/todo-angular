@@ -9,6 +9,7 @@ import { TodoListComponent } from './components/todo-list/todo-list.component';
 import { TodoListPageComponent } from './pages/todo-list-page/todo-list-page.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { SignInComponent } from './pages/sign-in/sign-in.component';
+import { SignUpComponent } from './pages/sign-up/sign-up.component';
 
 @NgModule({
   declarations: [
@@ -17,6 +18,7 @@ import { SignInComponent } from './pages/sign-in/sign-in.component';
     TodoListComponent,
     TodoListPageComponent,
     SignInComponent,
+    SignUpComponent,
   ],
   imports: [
     BrowserModule,

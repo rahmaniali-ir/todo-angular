@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
+import { AuthResponse } from '../types/auth';
 import { User } from '../types/user';
 import { ApiService } from './api.service';
 
@@ -9,7 +10,15 @@ import { ApiService } from './api.service';
 export class AuthService {
   user$ = new BehaviorSubject<User | null>(null);
 
-  constructor(private apiService: ApiService) {}
+  private _token = '';
+
+  constructor(private apiService: ApiService) {
+    this.loadCredentialsFromLocalhost();
+  }
+
+  get token() {
+    return this._token;
+  }
 
   get user() {
     return this.user$.value;
@@ -19,11 +28,38 @@ export class AuthService {
     return this.user !== null;
   }
 
+  private saveCredentialsToLocalhost(auth: AuthResponse) {
+    localStorage.setItem('token', auth.token);
+    this._token = auth.token;
+
+    localStorage.setItem('user', JSON.stringify(auth.user));
+  }
+
+  private loadCredentialsFromLocalhost() {
+    const token = localStorage.getItem('token');
+
+    if (token) {
+      this._token = token;
+    }
+
+    const user = localStorage.getItem('user');
+
+    if (user) this.user$.next(JSON.parse(user));
+  }
+
   signIn(email: string, password: string) {
     this.apiService
-      .post<User | null>('sign-in', { email, password })
+      .post<AuthResponse>('sign-in', { email, password })
       .subscribe((res) => {
-        console.log(res);
+        if (res.body) this.saveCredentialsToLocalhost(res.body);
+      });
+  }
+
+  signUp(name: string, email: string, password: string) {
+    this.apiService
+      .post<AuthResponse>('sign-up', { name, email, password })
+      .subscribe((auth) => {
+        console.log(auth);
       });
   }
 }

@@ -1,0 +1,12 @@
+<main>
+  <h1>Sign up</h1>
+
+  <input [(ngModel)]="name" type="text" />
+  <input [(ngModel)]="email" type="email" />
+  <input [(ngModel)]="password" type="password" />
+  <input [(ngModel)]="confirmPassword" type="password" />
+
+  <button (click)="signUp()">Sign up</button>
+
+  <a routerLink="/sign-in">Sign in</a>
+</main>
