@@ -1,4 +1,5 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Action } from 'src/app/types/action';
 import { Todo } from 'src/app/types/todo';
 
 @Component({
@@ -8,8 +9,9 @@ import { Todo } from 'src/app/types/todo';
 })
 export class TodoListComponent implements OnInit {
   @Input() todos: Todo[] = [];
+  @Input() actions: Action[] = [];
 
-  @Output() onClick = new EventEmitter<Todo>();
+  @Output() onAction = new EventEmitter<Action<Todo>>();
 
   constructor() {}
 
@@ -19,7 +21,8 @@ export class TodoListComponent implements OnInit {
     return this.todos?.[index] ? this.todos[index].id : 0;
   }
 
-  todoClicked(todo: Todo) {
-    this.onClick.emit(todo);
+  actionClicked(todo: Todo, action: Action) {
+    action.data = todo;
+    this.onAction.emit(action);
   }
 }

@@ -1,5 +1,6 @@
 <todo-item
   *ngFor="let todo of todos; trackBy: trackById"
   [todo]="todo"
-  (click)="todoClicked(todo)"
+  [actions]="actions"
+  (onAction)="actionClicked(todo, $event)"
 ></todo-item>

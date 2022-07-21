@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { TodoService } from 'src/app/services/todo.service';
+import { Action } from 'src/app/types/action';
 import { Todo, TodoStatus } from 'src/app/types/todo';
 
 @Component({
@@ -10,6 +11,12 @@ import { Todo, TodoStatus } from 'src/app/types/todo';
 export class TodoListPageComponent implements OnInit {
   title = '';
   body = '';
+  actions: Action[] = [
+    {
+      name: 'delete',
+      title: 'Delete',
+    },
+  ];
 
   constructor(private todoService: TodoService) {}
 
@@ -37,5 +44,19 @@ export class TodoListPageComponent implements OnInit {
 
   toggleTodo(todo: Todo) {
     this.todoService.toggleTodo(todo);
+  }
+
+  onListAction(action: Action<Todo>) {
+    const todo = action.data;
+
+    if (!todo) return;
+
+    switch (action.name) {
+      case 'click':
+        return this.toggleTodo(todo);
+
+      case 'delete':
+        return this.deleteTodo(todo);
+    }
   }
 }

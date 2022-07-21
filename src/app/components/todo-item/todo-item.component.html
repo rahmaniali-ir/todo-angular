@@ -1,8 +1,14 @@
-<label>
+<main (click)="clicked($event)">
   <input [checked]="checked" type="checkbox" />
 
-  <main>
+  <div>
     <header>{{ todo.title }}</header>
     <p>{{ todo.body }}</p>
-  </main>
-</label>
+  </div>
+</main>
+
+<footer *ngIf="showActions">
+  <button *ngFor="let action of actions" (click)="actionClicked(action)">
+    {{ action.title }}
+  </button>
+</footer>
