@@ -1,5 +1,8 @@
 <header>
-  <input [(ngModel)]="searchKey" type="text" />
+  <mat-form-field class="example-full-width" appearance="fill">
+    <mat-label>Search</mat-label>
+    <input matInput [formControl]="searchKeyFormControl" placeholder="Search" />
+  </mat-form-field>
 </header>
 
 <todo-list
@@ -9,10 +12,19 @@
 ></todo-list>
 
 <footer>
-  <input [(ngModel)]="title" type="text" />
-  <input [(ngModel)]="body" type="text" />
+  <mat-form-field class="example-full-width" appearance="fill">
+    <mat-label>Title</mat-label>
+    <input matInput [formControl]="titleFormControl" placeholder="Title" />
+  </mat-form-field>
 
-  <button (click)="addTodo()">Add Todo</button>
+  <mat-form-field class="example-full-width" appearance="fill">
+    <mat-label>Body</mat-label>
+    <input matInput [formControl]="bodyFormControl" placeholder="Body" />
+  </mat-form-field>
+
+  <button mat-fab color="primary" (click)="addTodo()">
+    <mat-icon>post_add</mat-icon>
+  </button>
 </footer>
 
 <nav>

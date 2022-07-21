@@ -1,14 +1,16 @@
-<main (click)="clicked($event)">
-  <input [checked]="checked" type="checkbox" />
+<mat-card>
+  <mat-card-title (click)="clicked($event)">{{ todo.title }}</mat-card-title>
+  <mat-card-subtitle (click)="clicked($event)">
+    {{ todo.body }}
+  </mat-card-subtitle>
 
-  <div>
-    <header>{{ todo.title }}</header>
-    <p>{{ todo.body }}</p>
-  </div>
-</main>
-
-<footer *ngIf="showActions">
-  <button *ngFor="let action of actions" (click)="actionClicked(action)">
-    {{ action.title }}
-  </button>
-</footer>
+  <mat-card-actions *ngIf="showActions" align="end">
+    <button
+      mat-button
+      *ngFor="let action of actions"
+      (click)="actionClicked(action)"
+    >
+      {{ action.title }}
+    </button>
+  </mat-card-actions>
+</mat-card>

@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { AuthService } from 'src/app/services/auth.service';
 import { TodoService } from 'src/app/services/todo.service';
 import { Action } from 'src/app/types/action';
@@ -10,9 +11,11 @@ import { Todo, TodoStatus } from 'src/app/types/todo';
   styleUrls: ['./todo-list-page.component.sass'],
 })
 export class TodoListPageComponent implements OnInit {
-  title = '';
-  body = '';
-  searchKey = '';
+  form = new FormGroup({
+    searchKey: new FormControl('', []),
+    title: new FormControl('', [Validators.required]),
+    body: new FormControl('', [Validators.required]),
+  });
   actions: Action[] = [
     {
       name: 'delete',
@@ -29,12 +32,25 @@ export class TodoListPageComponent implements OnInit {
     this.todoService.fetchTodos();
   }
 
+  get searchKeyFormControl() {
+    return this.form.controls.searchKey;
+  }
+
+  get titleFormControl() {
+    return this.form.controls.title;
+  }
+
+  get bodyFormControl() {
+    return this.form.controls.body;
+  }
+
   get todos() {
     return this.todoService.todos;
   }
 
   get filteredTodos() {
-    const searchKey = this.searchKey.trim().toLowerCase();
+    const searchKey =
+      this.searchKeyFormControl.value?.trim().toLowerCase() || '';
     return this.todos.filter((todo) =>
       todo.title.toLowerCase().includes(searchKey)
     );
@@ -42,12 +58,13 @@ export class TodoListPageComponent implements OnInit {
 
   addTodo() {
     this.todoService.addTodo({
-      title: this.title,
-      body: this.body,
+      title: this.titleFormControl.value || '',
+      body: this.bodyFormControl.value || '',
       status: TodoStatus.Undone,
     });
 
-    this.title = this.body = '';
+    this.titleFormControl.setValue('');
+    this.bodyFormControl.setValue('');
   }
 
   deleteTodo(todo: Todo) {
