@@ -1,10 +1,14 @@
 <main>
   <h1>Sign up</h1>
 
-  <input [(ngModel)]="name" type="text" />
-  <input [(ngModel)]="email" type="email" />
-  <input [(ngModel)]="password" type="password" />
-  <input [(ngModel)]="confirmPassword" type="password" />
+  <input [(ngModel)]="name" placeholder="name" type="text" />
+  <input [(ngModel)]="email" placeholder="email" type="email" />
+  <input [(ngModel)]="password" placeholder="password" type="password" />
+  <input
+    [(ngModel)]="confirmPassword"
+    placeholder="confirmPassword"
+    type="password"
+  />
 
   <button (click)="signUp()">Sign up</button>
 
