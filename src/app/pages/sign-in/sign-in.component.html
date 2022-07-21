@@ -1,10 +1,31 @@
-<main>
+<form class="example-form">
   <h1>Sign in</h1>
 
-  <input [(ngModel)]="email" placeholder="email" type="email" />
-  <input [(ngModel)]="password" placeholder="password" type="password" />
+  <mat-form-field class="example-full-width" appearance="fill">
+    <mat-label>Email</mat-label>
+    <input
+      matInput
+      [formControl]="emailFormControl"
+      placeholder="Email"
+      type="email"
+    />
+  </mat-form-field>
 
-  <button (click)="signIn()">Sign in</button>
+  <mat-form-field class="example-full-width" appearance="fill">
+    <mat-label>Password</mat-label>
+    <input
+      matInput
+      [formControl]="passwordFormControl"
+      placeholder="Password"
+      type="password"
+    />
+  </mat-form-field>
 
-  <a routerLink="/sign-up">Sign up</a>
-</main>
+  <footer>
+    <button mat-raised-button color="primary" (click)="signIn()">
+      Sign in
+    </button>
+
+    <a mat-button routerLink="/sign-up">Sign up</a>
+  </footer>
+</form>

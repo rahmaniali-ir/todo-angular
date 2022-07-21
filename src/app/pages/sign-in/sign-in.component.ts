@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { AuthService } from 'src/app/services/auth.service';
 
 @Component({
@@ -7,16 +8,26 @@ import { AuthService } from 'src/app/services/auth.service';
   styleUrls: ['./sign-in.component.sass'],
 })
 export class SignInComponent implements OnInit {
-  email = '';
-  password = '';
+  form = new FormGroup({
+    email: new FormControl('', [Validators.required, Validators.email]),
+    password: new FormControl('', [Validators.required]),
+  });
 
   constructor(private authService: AuthService) {}
 
   ngOnInit(): void {}
 
+  get emailFormControl() {
+    return this.form.controls.email;
+  }
+
+  get passwordFormControl() {
+    return this.form.controls.password;
+  }
+
   signIn() {
-    const email = this.email.trim();
-    const password = this.password.trim();
+    const email = this.emailFormControl.value?.trim() || '';
+    const password = this.passwordFormControl.value?.trim() || '';
 
     if (!email.length || !password.length) return;
 
