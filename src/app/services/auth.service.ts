@@ -41,6 +41,10 @@ export class AuthService {
 
     if (token) {
       this._token = token;
+
+      setTimeout(() => {
+        this.fetchProfile();
+      }, 0);
     }
 
     const user = localStorage.getItem('user');
@@ -48,25 +52,47 @@ export class AuthService {
     if (user) this.user$.next(JSON.parse(user));
   }
 
+  private signInAndRedirect(auth: AuthResponse) {
+    this.saveCredentialsToLocalhost(auth);
+    this._token = auth.token;
+    this.user$.next(auth.user);
+
+    this.router.navigate(['/']);
+  }
+
+  fetchProfile() {
+    this.apiService.get<User>('profile').subscribe((res) => {
+      if (res.success) {
+        this.user$.next(res.body);
+      } else {
+        this.signOut();
+      }
+    });
+  }
+
   signIn(email: string, password: string) {
     this.apiService
       .post<AuthResponse>('sign-in', { email, password })
       .subscribe((res) => {
-        if (res.body) this.saveCredentialsToLocalhost(res.body);
+        if (res.success) {
+          this.signInAndRedirect(res.body);
+        }
       });
   }
 
   signUp(name: string, email: string, password: string) {
     this.apiService
       .post<AuthResponse>('sign-up', { name, email, password })
-      .subscribe((auth) => {
-        console.log(auth);
+      .subscribe((res) => {
+        if (res.success) {
+          this.signInAndRedirect(res.body);
+        }
       });
   }
 
   signOut() {
     this.apiService.delete<boolean>('sign-out').subscribe((res) => {
-      if (res.body) {
+      if (res.success) {
         localStorage.clear();
         this.user$.next(null);
         this._token = '';
