@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { AuthService } from 'src/app/services/auth.service';
 
 @Component({
@@ -7,22 +8,43 @@ import { AuthService } from 'src/app/services/auth.service';
   styleUrls: ['./sign-up.component.sass'],
 })
 export class SignUpComponent implements OnInit {
-  name = '';
-  email = '';
-  password = '';
-  confirmPassword = '';
+  form = new FormGroup({
+    name: new FormControl('', [Validators.required]),
+    email: new FormControl('', [Validators.required, Validators.email]),
+    password: new FormControl('', [Validators.required]),
+    confirmPassword: new FormControl('', [Validators.required]),
+  });
 
   constructor(private authService: AuthService) {}
 
   ngOnInit(): void {}
 
+  get nameFormControl() {
+    return this.form.controls.name;
+  }
+
+  get emailFormControl() {
+    return this.form.controls.email;
+  }
+
+  get passwordFormControl() {
+    return this.form.controls.password;
+  }
+
+  get confirmPasswordFormControl() {
+    return this.form.controls.confirmPassword;
+  }
+
   signUp() {
-    if (this.password !== this.confirmPassword) return;
+    if (
+      this.passwordFormControl.value !== this.confirmPasswordFormControl.value
+    )
+      return;
 
-    const name = this.name.trim();
-    const email = this.email.trim();
+    const name = this.nameFormControl.value?.trim() || '';
+    const email = this.emailFormControl.value?.trim() || '';
 
-    const password = this.password.trim();
+    const password = this.passwordFormControl.value?.trim() || '';
 
     if (!email.length || !password.length) return;
 
