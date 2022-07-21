@@ -43,8 +43,6 @@ export class TodoService {
 
           return t;
         });
-
-        console.log(tt);
       });
   }
 }
