@@ -11,6 +11,20 @@ export class AppComponent {
     {
       title: 'Home',
       href: '/',
+      icon: 'home',
+      protected: true,
+    },
+    {
+      title: 'Sign in',
+      href: '/sign-in',
+      icon: 'login',
+      protected: false,
+    },
+    {
+      title: 'Sign up',
+      href: '/sign-up',
+      icon: 'how_to_reg',
+      protected: false,
     },
   ];
 
@@ -18,6 +32,10 @@ export class AppComponent {
 
   get SignedIn() {
     return this.authService.isLoggedIn;
+  }
+
+  get filteredLinks() {
+    return this.links.filter((link) => link.protected === this.SignedIn);
   }
 
   signOut() {

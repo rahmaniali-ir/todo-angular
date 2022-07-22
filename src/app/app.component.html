@@ -1,12 +1,23 @@
 <mat-drawer-container class="container" autosize>
   <mat-drawer #drawer class="sidenav" mode="side">
     <mat-nav-list>
-      <mat-list-item *ngFor="let link of links">
-        <a mat-button [routerLink]="link.href">{{ link.title }}</a>
+      <mat-list-item
+        *ngFor="let link of filteredLinks"
+        [routerLink]="link.href"
+        (click)="drawer.close()"
+      >
+        <mat-icon *ngIf="link.icon">{{ link.icon }}</mat-icon>
+        {{ link.title }}
       </mat-list-item>
 
-      <mat-list-item *ngIf="SignedIn">
-        <button mat-button (click)="signOut()">Sign out</button>
+      <mat-list-item
+        *ngIf="SignedIn"
+        (click)="signOut()"
+        (click)="drawer.close()"
+        end
+      >
+        <mat-icon>logout</mat-icon>
+        Sign out
       </mat-list-item>
     </mat-nav-list>
   </mat-drawer>
