@@ -1,7 +1,14 @@
 
 :host
   display: block
-  padding: 32px
+  padding: 64px
+
+header, footer
+  > *
+    display: block
+    width: 100%
 
 footer
   margin-top: 16px
+  max-width: 100%
+  width: clamp(300px, 40vw, 500px)

@@ -19,14 +19,19 @@
 
   <mat-form-field class="example-full-width" appearance="fill">
     <mat-label>Body</mat-label>
-    <input matInput [formControl]="bodyFormControl" placeholder="Body" />
+    <textarea
+      matInput
+      [formControl]="bodyFormControl"
+      placeholder="Body"
+    ></textarea>
   </mat-form-field>
 
-  <button mat-fab color="primary" (click)="addTodo()">
-    <mat-icon>post_add</mat-icon>
+  <button
+    mat-raised-button
+    color="primary"
+    [disabled]="form.invalid"
+    (click)="addTodo()"
+  >
+    Add
   </button>
 </footer>
-
-<nav>
-  <button (click)="signOut()">Sign out</button>
-</nav>

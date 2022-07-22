@@ -4,3 +4,8 @@
   [actions]="actions"
   (onAction)="actionClicked(todo, $event)"
 ></todo-item>
+
+<div *ngIf="isEmpty" class="empty">
+  <mat-icon big>fact_check</mat-icon>
+  <p>There are no todos!</p>
+</div>

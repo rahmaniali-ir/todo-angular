@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { AuthService } from 'src/app/services/auth.service';
 import { TodoService } from 'src/app/services/todo.service';
 import { Action } from 'src/app/types/action';
 import { Todo, TodoStatus } from 'src/app/types/todo';
@@ -20,13 +19,12 @@ export class TodoListPageComponent implements OnInit {
     {
       name: 'delete',
       title: 'Delete',
+      icon: 'delete',
+      color: 'warn',
     },
   ];
 
-  constructor(
-    private todoService: TodoService,
-    private authService: AuthService
-  ) {}
+  constructor(private todoService: TodoService) {}
 
   ngOnInit(): void {
     this.todoService.fetchTodos();
@@ -63,8 +61,7 @@ export class TodoListPageComponent implements OnInit {
       status: TodoStatus.Undone,
     });
 
-    this.titleFormControl.setValue('');
-    this.bodyFormControl.setValue('');
+    this.form.reset();
   }
 
   deleteTodo(todo: Todo) {
@@ -87,9 +84,5 @@ export class TodoListPageComponent implements OnInit {
       case 'delete':
         return this.deleteTodo(todo);
     }
-  }
-
-  signOut() {
-    this.authService.signOut();
   }
 }

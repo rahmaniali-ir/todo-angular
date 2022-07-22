@@ -17,6 +17,10 @@ export class TodoListComponent implements OnInit {
 
   ngOnInit(): void {}
 
+  get isEmpty() {
+    return this.todos.length === 0;
+  }
+
   trackById(index: number) {
     return this.todos?.[index] ? this.todos[index].id : 0;
   }

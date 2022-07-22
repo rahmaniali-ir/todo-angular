@@ -6,11 +6,13 @@
 
   <mat-card-actions *ngIf="showActions" align="end">
     <button
-      mat-button
+      mat-mini-fab
       *ngFor="let action of actions"
+      [color]="action.color"
+      [title]="action.title"
       (click)="actionClicked(action)"
     >
-      {{ action.title }}
+      <mat-icon>{{ action.icon }}</mat-icon>
     </button>
   </mat-card-actions>
 </mat-card>
