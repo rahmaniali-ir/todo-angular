@@ -16,6 +16,10 @@ export class AppComponent {
 
   constructor(private authService: AuthService) {}
 
+  get SignedIn() {
+    return this.authService.isLoggedIn;
+  }
+
   signOut() {
     this.authService.signOut();
   }
