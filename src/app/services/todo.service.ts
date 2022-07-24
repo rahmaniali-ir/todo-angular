@@ -4,6 +4,7 @@ import { environment } from 'src/environments/environment';
 import { ApiResponse } from '../types/api';
 import { Todo } from '../types/todo';
 import { ApiService } from './api.service';
+import { AuthService } from './auth.service';
 
 @Injectable({
   providedIn: 'root',
@@ -11,7 +12,13 @@ import { ApiService } from './api.service';
 export class TodoService {
   todos: Todo[] = [];
 
-  constructor(private api: ApiService) {}
+  constructor(private api: ApiService, private authService: AuthService) {
+    this.authService.user$.subscribe((user) => {
+      if (!user) {
+        this.todos = [];
+      }
+    });
+  }
 
   fetchTodos() {
     this.api.get<Todo[]>('todos').subscribe((res) => (this.todos = res));
