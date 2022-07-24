@@ -61,12 +61,13 @@ export class AuthService {
   }
 
   fetchProfile() {
-    this.apiService.get<User>('profile').subscribe((res) => {
-      if (res.success) {
-        this.user$.next(res.body);
-      } else {
+    this.apiService.get<User>('profile').subscribe({
+      next: (res) => {
+        this.user$.next(res);
+      },
+      error: () => {
         this.signOut();
-      }
+      },
     });
   }
 
@@ -74,9 +75,7 @@ export class AuthService {
     this.apiService
       .post<AuthResponse>('sign-in', { email, password })
       .subscribe((res) => {
-        if (res.success) {
-          this.signInAndRedirect(res.body);
-        }
+        this.signInAndRedirect(res);
       });
   }
 
@@ -84,21 +83,17 @@ export class AuthService {
     this.apiService
       .post<AuthResponse>('sign-up', { name, email, password })
       .subscribe((res) => {
-        if (res.success) {
-          this.signInAndRedirect(res.body);
-        }
+        this.signInAndRedirect(res);
       });
   }
 
   signOut() {
     this.apiService.delete<boolean>('sign-out').subscribe((res) => {
-      if (res.success) {
-        localStorage.clear();
-        this.user$.next(null);
-        this._token = '';
+      localStorage.clear();
+      this.user$.next(null);
+      this._token = '';
 
-        this.router.navigate(['/sign-in']);
-      }
+      this.router.navigate(['/sign-in']);
     });
   }
 }

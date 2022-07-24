@@ -14,13 +14,11 @@ export class TodoService {
   constructor(private api: ApiService) {}
 
   fetchTodos() {
-    this.api.get<Todo[]>('todos').subscribe((res) => (this.todos = res.body));
+    this.api.get<Todo[]>('todos').subscribe((res) => (this.todos = res));
   }
 
   addTodo(todo: Partial<Todo>) {
-    this.api
-      .post<Todo>('todo', todo)
-      .subscribe((res) => this.todos.push(res.body));
+    this.api.post<Todo>('todo', todo).subscribe((res) => this.todos.push(res));
   }
 
   deleteTodo(todo: Todo) {
@@ -33,7 +31,7 @@ export class TodoService {
     this.api.put<Todo>('todo?uid=' + todo.id, {}).subscribe((res) => {
       const tt = this.todos.map((t) => {
         if (t.id === todo.id) {
-          t.status = res.body.status;
+          t.status = res.status;
         }
 
         return t;
