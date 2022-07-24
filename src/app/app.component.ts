@@ -30,12 +30,12 @@ export class AppComponent {
 
   constructor(private authService: AuthService) {}
 
-  get SignedIn() {
+  get signedIn() {
     return this.authService.isLoggedIn;
   }
 
   get filteredLinks() {
-    return this.links.filter((link) => link.protected === this.SignedIn);
+    return this.links.filter((link) => link.protected === this.signedIn);
   }
 
   signOut() {
