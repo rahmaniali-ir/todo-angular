@@ -42,13 +42,8 @@
 
       <span>Todos</span>
       <span class="spacer"></span>
-      <button
-        *ngIf="signedIn"
-        mat-icon-button
-        class="example-icon"
-        aria-label="Example icon-button with share icon"
-        routerLink="/profile"
-      >
+      <button *ngIf="signedIn" mat-button routerLink="/profile">
+        {{ userName }}
         <mat-icon>account_circle</mat-icon>
       </button>
     </mat-toolbar>

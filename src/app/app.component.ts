@@ -34,6 +34,10 @@ export class AppComponent {
     return this.authService.isLoggedIn;
   }
 
+  get userName() {
+    return this.authService.user?.name;
+  }
+
   get filteredLinks() {
     return this.links.filter((link) => link.protected === this.signedIn);
   }
